@@ -299,7 +299,7 @@ def load_dataFrames():
         st.session_state['dataFramesLoaded'] = True
         return True
     
-@st.experimental_memo
+@st.cache_data
 def return_dataFrames(dataframeName):
     if check_dataFrames() == False:
         return False
@@ -316,7 +316,7 @@ def return_dataFrames(dataframeName):
             theFile = pd.read_csv(fileName)
     return theFile
 
-#@st.experimental_memo
+#@st.cache_data
 def generateStreets(Crime_data):
     streetNames = []
     for i in Crime_data['Block']:

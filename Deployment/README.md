@@ -24,7 +24,7 @@ The python version should be lower than 3.9. That's why we chose `python=3.8` ab
 
 Install fbprophet with:
 
-`conda install -c conda-forge fbprophet`
+`conda install -c conda-forge prophet`
 
 Install gettext with:
 

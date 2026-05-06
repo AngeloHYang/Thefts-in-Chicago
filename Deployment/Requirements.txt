@@ -1,5 +1,7 @@
 plotly
-sklearn
+#sklearn
+scikit-learn
+matplotlib
 folium
 streamlit
 streamlit-folium

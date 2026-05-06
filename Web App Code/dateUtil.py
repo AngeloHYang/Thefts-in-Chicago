@@ -9,7 +9,7 @@ import datetime
 timePrecision = ["Hour", "Day", "Month", "Year"]
 TimePrecision_to_timeType_dict = {"Hour": "H", "Day": "D", "Month": "M", "Year": "Y"}
     
-@st.experimental_memo
+@st.cache_data
 def getTimePrecisionValue(TimePrecisionName):
     return timePrecision.index(TimePrecisionName)
 

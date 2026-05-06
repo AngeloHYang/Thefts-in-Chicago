@@ -16,13 +16,13 @@ from sklearn.metrics import explained_variance_score
 from sklearn.metrics import r2_score
 
 # fbprophet related
-from fbprophet import Prophet
-from fbprophet.diagnostics import cross_validation, performance_metrics
-from fbprophet.plot import plot_cross_validation_metric, add_changepoints_to_plot, plot_plotly
+from prophet import Prophet
+from prophet.diagnostics import cross_validation, performance_metrics
+from prophet.plot import plot_cross_validation_metric, add_changepoints_to_plot, plot_plotly
 import json
-from fbprophet.serialize import model_to_json, model_from_json
+from prophet.serialize import model_to_json, model_from_json
 
-#@st.experimental_memo
+#@st.cache_data
 def createDatasetForEvaluation(Crime_data_2003_to_2004, timeType, selectingCondition):
     # Apply data selecting to Crime_data_2003_to_2004
     selectAll = True if selectingCondition == "" or selectingCondition == False else False
@@ -44,7 +44,7 @@ def createDatasetForEvaluation(Crime_data_2003_to_2004, timeType, selectingCondi
     # timeType can be H, D, W, M, Y
     # There'll be no model if there's less than 2 data.
     # First False for model, third False for no evaluation
-#@st.experimental_memo
+#@st.cache_data
 def createProphetModel(neededDf, timeType, selectingCondition):
     #selectingCondition = (neededDf['Primary Type'] == 'BURGLARY') & (neededDf['Location Description'] == 'STREET')
     selectAll = True if selectingCondition == "" or selectingCondition == False else False
@@ -104,7 +104,7 @@ def createProphetModel(neededDf, timeType, selectingCondition):
     # First False for model, second False for no evaluation
     return prophet
 
-#@st.experimental_memo
+#@st.cache_data
 def generateModelName(timeType, crimeType, locationType, locationValue):
     # timeType can be H, D, W, M, Y
     # crimeType can be ALL, BURGLARY, MOTOR VEHICLE THEFT, THEFT
@@ -155,7 +155,7 @@ def generateModelName(timeType, crimeType, locationType, locationValue):
     
     return FileName        
 
-#@st.experimental_memo
+#@st.cache_data
 def generateModelSelection(crimeType, locationType, locationValue):
 # Based on crimeType and locationType
 # Get selectingCondition and selectAll value
@@ -217,7 +217,7 @@ def saveProphetModel(ModelPath, model, modelName):
         return True
     return False
     
-#@st.experimental_memo
+#@st.cache_data
 def evaluateModel(model, restDataframe):
     y_true = restDataframe
     y_predicted = pd.DataFrame(restDataframe['ds'])
@@ -324,7 +324,7 @@ def modelErrorDetect(Reason, timeType, crimeType, locationType):
 
 
 # This generates a model based on what you get from the prediction page
-#@st.experimental_memo
+#@st.cache_data
 def getModelToUse(TimePrecision, CrimeTypeArray, LocationType, LocationValueArray):
     query = queryUtil.get_CrimeType_and_Location_query(CrimeTypeArray, LocationType, LocationValueArray)
     theModel = createProphetModel(
@@ -334,7 +334,7 @@ def getModelToUse(TimePrecision, CrimeTypeArray, LocationType, LocationValueArra
     )
     return theModel
     
-#@st.experimental_memo
+#@st.cache_data
 def getEvaluationModelToUse(TimePrecision, CrimeTypeArray, LocationType, LocationValueArray):
     query = queryUtil.get_CrimeType_and_Location_query(CrimeTypeArray, LocationType, LocationValueArray)
     theDataset_2003_to_2004, restDataExist = createDatasetForEvaluation(
