@@ -1,5 +1,7 @@
 plotly
-sklearn
+scikit-learn
 folium
 streamlit
 streamlit-folium
+matplotlib
+prophet
